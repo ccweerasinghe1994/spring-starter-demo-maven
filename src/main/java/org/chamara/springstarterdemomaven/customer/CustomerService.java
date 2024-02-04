@@ -1,8 +1,9 @@
 package org.chamara.springstarterdemomaven.customer;
 
-import java.util.List;
-
+import org.chamara.springstarterdemomaven.exception.ResourceNotFound;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -18,7 +19,7 @@ public class CustomerService {
 
     public Customer getCustomerById(Integer id) {
         return customerDoaService.getCustomerById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFound("Customer with id [%s] not found ".formatted(id)));
     }
 
 }
