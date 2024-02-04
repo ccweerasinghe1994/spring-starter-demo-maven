@@ -1,12 +1,11 @@
 package org.chamara.springstarterdemomaven.customer;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("api/v1/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -14,13 +13,23 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("api/v1/customers")
+    @GetMapping()
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
     }
 
-    @GetMapping("api/v1/customer/{id}")
+    @GetMapping("{id}")
     public Customer getCustomerById(@PathVariable("id") Integer id) {
         return customerService.getCustomerById(id);
+    }
+
+    @PostMapping()
+    public void addCustomer(@RequestBody CustomerRegistrationRequest customer) {
+        customerService.addCustomer(customer);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteCustomerById(@PathVariable("id") Integer id) {
+        customerService.deleteCustomerById(id);
     }
 }
