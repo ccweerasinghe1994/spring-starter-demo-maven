@@ -17,7 +17,7 @@ public class CustomerDoaService implements CustomerDoa {
         customers.add(new Customer(3, "Nimal", "abcde@123.com", 40));
 
     }
-    
+
     @Override
     public List<Customer> selectAllCustomers() {
         return customers;
@@ -26,5 +26,25 @@ public class CustomerDoaService implements CustomerDoa {
     @Override
     public Optional<Customer> selectCustomerById(Integer id) {
         return customers.stream().filter(c -> c.getId().equals(id)).findFirst();
+    }
+
+    @Override
+    public void insertCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    @Override
+    public boolean existsCustomerWithEmail(String email) {
+        return customers.stream().anyMatch(c -> c.getEmail().equals(email));
+    }
+
+    @Override
+    public void deleteCustomerById(Integer id) {
+        customers.removeIf(c -> c.getId().equals(id));
+    }
+
+    @Override
+    public boolean existsCustomerById(Integer id) {
+        return customers.stream().anyMatch(c -> c.getId().equals(id));
     }
 }
