@@ -1,6 +1,7 @@
 package org.chamara.springstarterdemomaven.customer;
 
-import org.chamara.springstarterdemomaven.exception.ResourceNotFound;
+import org.chamara.springstarterdemomaven.exception.DuplicateResourceException;
+import org.chamara.springstarterdemomaven.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,28 @@ public class CustomerService {
 
     public Customer getCustomerById(Integer id) {
         return customerDoa.selectCustomerById(id)
-                .orElseThrow(() -> new ResourceNotFound("Customer with id [%s] not found ".formatted(id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with id [%s] not found ".formatted(id)));
+    }
+
+    public void addCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
+        String email = customerRegistrationRequest.email();
+
+        if (customerDoa.existsCustomerWithEmail(email)) {
+            throw new DuplicateResourceException("Email already taken");
+        }
+
+        String name = customerRegistrationRequest.name();
+        Integer age = customerRegistrationRequest.age();
+
+        Customer customer = new Customer(name, email, age);
+        customerDoa.insertCustomer(customer);
+    }
+
+    public void deleteCustomerById(Integer id) {
+        if (!customerDoa.existsCustomerById(id)) {
+            throw new ResourceNotFoundException("Customer with id [%s] not found ".formatted(id));
+        }
+        customerDoa.deleteCustomerById(id);
     }
 
 }
