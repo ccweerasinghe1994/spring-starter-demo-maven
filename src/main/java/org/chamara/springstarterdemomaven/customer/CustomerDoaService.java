@@ -17,15 +17,14 @@ public class CustomerDoaService implements CustomerDoa {
         customers.add(new Customer(3, "Nimal", "abcde@123.com", 40));
 
     }
-
+    
     @Override
-    public List<Customer> getCustomers() {
+    public List<Customer> selectAllCustomers() {
         return customers;
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Integer id) {
+    public Optional<Customer> selectCustomerById(Integer id) {
         return customers.stream().filter(c -> c.getId().equals(id)).findFirst();
     }
-
 }

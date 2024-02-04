@@ -14,13 +14,14 @@ public class CustomerJPADataAccessService implements CustomerDoa {
         this.customerRepository = customerRepository;
     }
 
+
     @Override
-    public List<Customer> getCustomers() {
+    public List<Customer> selectAllCustomers() {
         return customerRepository.findAll();
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Integer id) {
-        return Optional.empty();
+    public Optional<Customer> selectCustomerById(Integer id) {
+        return customerRepository.findById(id);
     }
 }
