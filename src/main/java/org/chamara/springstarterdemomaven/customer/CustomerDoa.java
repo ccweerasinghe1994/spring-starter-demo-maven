@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 interface CustomerDoa {
-    List<Customer> getCustomers();
+    List<Customer> selectAllCustomers();
 
-    Optional<Customer> getCustomerById(Integer id);
+    Optional<Customer> selectCustomerById(Integer id);
 
 }
