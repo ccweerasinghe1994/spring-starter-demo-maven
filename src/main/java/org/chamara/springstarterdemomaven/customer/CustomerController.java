@@ -1,16 +1,18 @@
 package org.chamara.springstarterdemomaven.customer;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 public class CustomerController {
-    private final CustomerService customerService;
+    private final CustomerDoa customerService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(@Qualifier("jpa") CustomerDoa customerService) {
         this.customerService = customerService;
     }
 
@@ -20,7 +22,7 @@ public class CustomerController {
     }
 
     @GetMapping("api/v1/customer/{id}")
-    public Customer getCustomerById(@PathVariable("id") Integer id) {
+    public Optional<Customer> getCustomerById(@PathVariable("id") Integer id) {
         return customerService.getCustomerById(id);
     }
 }
