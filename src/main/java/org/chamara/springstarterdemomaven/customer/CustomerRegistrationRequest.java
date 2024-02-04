@@ -1,2 +1,8 @@
-package org.chamara.springstarterdemomaven.customer;public class CustomerRegistrationRequest {
+package org.chamara.springstarterdemomaven.customer;
+
+public record CustomerRegistrationRequest(
+        String name,
+        String email,
+        Integer age
+) {
 }
