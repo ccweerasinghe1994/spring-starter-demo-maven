@@ -1,2 +1,7 @@
-package org.chamara.springstarterdemomaven.customer;public interface CustomerRepository {
+package org.chamara.springstarterdemomaven.customer;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+
 }
