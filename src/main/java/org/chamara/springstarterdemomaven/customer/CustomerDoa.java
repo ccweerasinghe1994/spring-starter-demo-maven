@@ -8,4 +8,11 @@ interface CustomerDoa {
 
     Optional<Customer> selectCustomerById(Integer id);
 
+    void insertCustomer(Customer customer);
+
+    boolean existsCustomerWithEmail(String email);
+
+    void deleteCustomerById(Integer id);
+
+    boolean existsCustomerById(Integer id);
 }
