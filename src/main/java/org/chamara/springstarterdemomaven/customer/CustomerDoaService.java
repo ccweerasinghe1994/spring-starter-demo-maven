@@ -1,14 +1,15 @@
 package org.chamara.springstarterdemomaven.customer;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class CustomerDoaService implements CustomerDOA {
+@Repository("list")
+public class CustomerDoaService implements CustomerDoa {
     private static List<Customer> customers;
+
     static {
         customers = new ArrayList<>();
         customers.add(new Customer(1, "Chamara", "abc@123.com", 30));
