@@ -47,4 +47,9 @@ public class CustomerDoaService implements CustomerDoa {
     public boolean existsCustomerById(Integer id) {
         return customers.stream().anyMatch(c -> c.getId().equals(id));
     }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        customers.add(customer);
+    }
 }
