@@ -15,4 +15,6 @@ interface CustomerDoa {
     void deleteCustomerById(Integer id);
 
     boolean existsCustomerById(Integer id);
+
+    void updateCustomerById(Customer customer);
 }
