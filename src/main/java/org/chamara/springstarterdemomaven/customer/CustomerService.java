@@ -1,6 +1,7 @@
 package org.chamara.springstarterdemomaven.customer;
 
 import org.chamara.springstarterdemomaven.exception.DuplicateResourceException;
+import org.chamara.springstarterdemomaven.exception.RequestValidationException;
 import org.chamara.springstarterdemomaven.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,36 @@ public class CustomerService {
             throw new ResourceNotFoundException("Customer with id [%s] not found ".formatted(id));
         }
         customerDoa.deleteCustomerById(id);
+    }
+
+    public void updateCustomerById(Integer id, CustomerUpdateRequest update) {
+        Customer customer = getCustomerById(id);
+
+        boolean changed = false;
+
+        if (update.name() != null && !update.name().equals(customer.getName())) {
+            customer.setName(update.name());
+            changed = true;
+        }
+
+        if (update.email() != null && !update.email().equals(customer.getEmail())) {
+            if (customerDoa.existsCustomerWithEmail(update.email())) {
+                throw new DuplicateResourceException("Email already taken");
+            }
+            customer.setEmail(update.email());
+            changed = true;
+        }
+
+        if (update.age() != null && !update.age().equals(customer.getAge())) {
+            customer.setAge(update.age());
+            changed = true;
+        }
+
+        if (changed) {
+            customerDoa.updateCustomer(customer);
+        } else {
+            throw new RequestValidationException("No changes detected");
+        }
     }
 
 }
