@@ -44,4 +44,9 @@ public class CustomerJPADataAccessService implements CustomerDoa {
     public boolean existsCustomerById(Integer id) {
         return customerRepository.existsCustomerById(id);
     }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
 }
