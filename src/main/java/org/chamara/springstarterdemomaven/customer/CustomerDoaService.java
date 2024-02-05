@@ -12,9 +12,9 @@ public class CustomerDoaService implements CustomerDoa {
 
     static {
         customers = new ArrayList<>();
-        customers.add(new Customer(1, "Chamara", "abc@123.com", 30));
-        customers.add(new Customer(2, "Kasun", "abcd@123.com", 25));
-        customers.add(new Customer(3, "Nimal", "abcde@123.com", 40));
+        customers.add(new Customer(1l, "Chamara", "abc@123.com", 30));
+        customers.add(new Customer(2l, "Kasun", "abcd@123.com", 25));
+        customers.add(new Customer(3l, "Nimal", "abcde@123.com", 40));
 
     }
 

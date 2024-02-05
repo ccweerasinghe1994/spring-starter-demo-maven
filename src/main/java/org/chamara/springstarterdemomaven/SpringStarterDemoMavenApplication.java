@@ -20,9 +20,9 @@ public class SpringStarterDemoMavenApplication {
     CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
 
         return args -> {
-            Customer customer1 = new Customer(1, "Chamara", "abc@123.com", 30);
-            Customer customer2 = new Customer(2, "Kasun", "abcd@123.com", 25);
-            Customer customer3 = new Customer(3, "Nimal", "abcde@123.com", 40);
+            Customer customer1 = new Customer(1l, "Chamara", "abc@123.com", 30);
+            Customer customer2 = new Customer(2l, "Kasun", "abcd@123.com", 25);
+            Customer customer3 = new Customer(3l, "Nimal", "abcde@123.com", 40);
             List<Customer> customers = List.of(customer1, customer2, customer3);
 //            customerRepository.saveAll(customers);
         };
