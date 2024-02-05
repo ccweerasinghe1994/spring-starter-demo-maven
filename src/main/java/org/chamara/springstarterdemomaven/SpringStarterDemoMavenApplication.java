@@ -1,13 +1,7 @@
 package org.chamara.springstarterdemomaven;
 
-import org.chamara.springstarterdemomaven.customer.Customer;
-import org.chamara.springstarterdemomaven.customer.CustomerRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 
 @SpringBootApplication
 public class SpringStarterDemoMavenApplication {
@@ -16,15 +10,21 @@ public class SpringStarterDemoMavenApplication {
         SpringApplication.run(SpringStarterDemoMavenApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
-
-        return args -> {
-            Customer customer1 = new Customer(1l, "Chamara", "abc@123.com", 30);
-            Customer customer2 = new Customer(2l, "Kasun", "abcd@123.com", 25);
-            Customer customer3 = new Customer(3l, "Nimal", "abcde@123.com", 40);
-            List<Customer> customers = List.of(customer1, customer2, customer3);
+//    @Bean
+//    CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
+//        return args -> {
+//            Faker faker = new Faker();
+//            String name;
+//            int age;
+//            String email;
+//            List<Customer> customers = new ArrayList<>();
+//            for (int i = 0; i < 1000; i++) {
+//                name = faker.name().firstName();
+//                age = faker.number().numberBetween(20, 50);
+//                email = faker.internet().emailAddress();
+//                customers.add(new Customer(name, email, age));
+//            }
 //            customerRepository.saveAll(customers);
-        };
-    }
+//        };
+//    }
 }
