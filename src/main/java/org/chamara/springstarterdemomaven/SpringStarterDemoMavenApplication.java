@@ -24,8 +24,7 @@ public class SpringStarterDemoMavenApplication {
             Customer customer2 = new Customer(2, "Kasun", "abcd@123.com", 25);
             Customer customer3 = new Customer(3, "Nimal", "abcde@123.com", 40);
             List<Customer> customers = List.of(customer1, customer2, customer3);
-            customerRepository.saveAll(customers);
-            System.out.println("Hello World");
+//            customerRepository.saveAll(customers);
         };
     }
 }
