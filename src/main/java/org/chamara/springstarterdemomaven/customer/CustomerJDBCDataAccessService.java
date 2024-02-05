@@ -1,6 +1,7 @@
 package org.chamara.springstarterdemomaven.customer;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +18,19 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
 
     @Override
     public List<Customer> selectAllCustomers() {
-        return null;
+        var sql = """
+                SELECT id, name, email, age
+                FROM customer
+                """;
+        RowMapper<Customer> customerRowMapper = (resultSet, i) -> {
+            var id = resultSet.getLong("id");
+            var name = resultSet.getString("name");
+            var email = resultSet.getString("email");
+            var age = resultSet.getInt("age");
+            return new Customer(id, name, email, age);
+        };
+        List<Customer> query = jdbcTemplate.query(sql, customerRowMapper);
+        return query;
     }
 
     @Override
