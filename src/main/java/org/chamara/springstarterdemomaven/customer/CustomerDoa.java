@@ -16,5 +16,5 @@ interface CustomerDoa {
 
     boolean existsCustomerById(Integer id);
 
-    void updateCustomerById(Customer customer);
+    void updateCustomer(Customer customer);
 }
