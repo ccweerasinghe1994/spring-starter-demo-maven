@@ -1,34 +1,23 @@
 package org.chamara.springstarterdemomaven;
 
-import org.flywaydb.core.Flyway;
+import org.chamara.springstarterdemomaven.customer.CustomerJDBCDataAccessService;
+import org.chamara.springstarterdemomaven.customer.CustomerRawMapper;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-
-@Testcontainers
-public class TestContainerTest {
-
-    private static final String POSTGRES_IMAGE = "postgres:16.1";
-    private static final String POSTGRES_USERNAME = "chamara";
-    private static final String POSTGRES_PASSWORD = "password";
-    private static final String POSTGRES_DB_NAME = "test-container-db";
+import org.springframework.jdbc.core.JdbcTemplate;
 
 
-    @Container
-    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE)
-            .withUsername(POSTGRES_USERNAME)
-            .withPassword(POSTGRES_PASSWORD)
-            .withDatabaseName(POSTGRES_DB_NAME);
+public class TestContainerTest extends AbstractTestContainer {
 
-    @DynamicPropertySource
-    static void setPostgresProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
-        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+    private CustomerJDBCDataAccessService underTest;
+
+
+    private final CustomerRawMapper customerRawMapper = new CustomerRawMapper();
+
+    @BeforeEach
+    void setUp() {
+        underTest = new CustomerJDBCDataAccessService(new JdbcTemplate(), customerRawMapper);
     }
 
     @Test
@@ -41,17 +30,4 @@ public class TestContainerTest {
         // then
     }
 
-    @Test
-    void canApplyDBMigrationsWithFlyWay() {
-        // given
-        Flyway flyway = Flyway.configure().dataSource(
-                postgreSQLContainer.getJdbcUrl(),
-                postgreSQLContainer.getUsername(),
-                postgreSQLContainer.getPassword()
-        ).load();
-        flyway.migrate();
-        System.out.println("Migrations applied successfully");
-        // when
-        // then
-    }
 }
