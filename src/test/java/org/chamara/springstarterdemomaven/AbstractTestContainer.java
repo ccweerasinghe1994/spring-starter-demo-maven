@@ -2,11 +2,15 @@ package org.chamara.springstarterdemomaven;
 
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import javax.sql.DataSource;
 
 @Testcontainers
 public abstract class AbstractTestContainer {
@@ -41,4 +45,17 @@ public abstract class AbstractTestContainer {
         registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
     }
 
+    private static DataSource getDataSource() {
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder
+                .create()
+                .driverClassName(postgreSQLContainer.getDriverClassName());
+        dataSourceBuilder.url(postgreSQLContainer.getJdbcUrl());
+        dataSourceBuilder.username(postgreSQLContainer.getUsername());
+        dataSourceBuilder.password(postgreSQLContainer.getPassword());
+        return dataSourceBuilder.build();
+    }
+
+    protected JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(getDataSource());
+    }
 }
