@@ -109,6 +109,6 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
                 SET name = ?, email = ?, age = ?
                 WHERE id = ?
                 """;
-        int result = jdbcTemplate.update(sql, customer.getName(), customer.getEmail(), customer.getAge(), customer.getId());
+        int result = jdbcTemplate.update(sql, update.getName(), update.getEmail(), update.getAge(), update.getId());
     }
 }
