@@ -56,8 +56,8 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
                 FROM customer
                 WHERE email = ?
                 """;
-        List<Boolean> query = jdbcTemplate.query(sql, (rs, rowNum) -> rs.getBoolean(1), email);
-        return query.getFirst();
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
     }
 
     @Override
@@ -67,6 +67,7 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
                 WHERE id = ?
                 """;
         int result = jdbcTemplate.update(sql, id);
+        System.out.println("deleted " + result + " rows");
     }
 
     @Override
@@ -76,12 +77,33 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
                 FROM customer
                 WHERE id = ?
                 """;
-        List<Boolean> query = jdbcTemplate.query(sql, (rs, rowNum) -> rs.getBoolean(1), id);
-        return query.getFirst();
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        return count != null && count > 0;
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer update) {
+
+        if (update.getName() != null) {
+            var sql = """
+                    UPDATE customer
+                    SET name = ?
+                    WHERE id = ?
+                    """;
+            int result = jdbcTemplate.update(sql, update.getName(), update.getId());
+            System.out.println("Update Customer Name: " + result + " rows affected");
+        }
+
+        if (update.getAge() != null) {
+            var sql = """
+                    UPDATE customer
+                    SET age = ?
+                    WHERE id = ?
+                    """;
+            int result = jdbcTemplate.update(sql, update.getAge(), update.getId());
+            System.out.println("Update Customer Age: " + result + " rows affected");
+        }
+
         var sql = """
                 UPDATE customer
                 SET name = ?, email = ?, age = ?
