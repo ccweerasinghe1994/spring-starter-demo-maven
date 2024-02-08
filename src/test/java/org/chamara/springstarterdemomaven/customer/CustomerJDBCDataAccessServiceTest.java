@@ -1,12 +1,18 @@
 package org.chamara.springstarterdemomaven.customer;
 
+import org.chamara.springstarterdemomaven.AbstractTestContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CustomerJDBCDataAccessServiceTest {
+class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
+    private CustomerJDBCDataAccessService underTest;
+
+
+    private final CustomerRawMapper customerRawMapper = new CustomerRawMapper();
 
     @BeforeEach
     void setUp() {
+        underTest = new CustomerJDBCDataAccessService(getJdbcTemplate(), customerRawMapper);
     }
 
     @Test
