@@ -1,5 +1,6 @@
 package org.chamara.springstarterdemomaven;
 
+import com.github.javafaker.Faker;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -58,4 +59,6 @@ public abstract class AbstractTestContainer {
     protected JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(getDataSource());
     }
+
+    protected final Faker FAKER = new Faker();
 }
