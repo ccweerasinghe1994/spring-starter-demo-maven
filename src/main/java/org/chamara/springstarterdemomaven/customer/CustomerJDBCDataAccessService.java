@@ -27,7 +27,7 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
     }
 
     @Override
-    public Optional<Customer> selectCustomerById(Integer id) {
+    public Optional<Customer> selectCustomerById(Long id) {
         var sql = """
                 SELECT id, name, email, age
                 FROM customer

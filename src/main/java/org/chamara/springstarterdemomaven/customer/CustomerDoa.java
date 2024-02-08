@@ -6,7 +6,7 @@ import java.util.Optional;
 interface CustomerDoa {
     List<Customer> selectAllCustomers();
 
-    Optional<Customer> selectCustomerById(Integer id);
+    Optional<Customer> selectCustomerById(Long id);
 
     void insertCustomer(Customer customer);
 

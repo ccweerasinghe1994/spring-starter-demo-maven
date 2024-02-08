@@ -24,7 +24,7 @@ public class CustomerDoaService implements CustomerDoa {
     }
 
     @Override
-    public Optional<Customer> selectCustomerById(Integer id) {
+    public Optional<Customer> selectCustomerById(Long id) {
         return customers.stream().filter(c -> c.getId().equals(id)).findFirst();
     }
 

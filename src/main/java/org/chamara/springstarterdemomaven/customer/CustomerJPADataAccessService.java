@@ -21,8 +21,8 @@ public class CustomerJPADataAccessService implements CustomerDoa {
     }
 
     @Override
-    public Optional<Customer> selectCustomerById(Integer id) {
-        return customerRepository.findById(id);
+    public Optional<Customer> selectCustomerById(Long id) {
+        return customerRepository.findById(Math.toIntExact(id));
     }
 
     @Override

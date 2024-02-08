@@ -20,7 +20,7 @@ public class CustomerService {
         return customerDoa.selectAllCustomers();
     }
 
-    public Customer getCustomerById(Integer id) {
+    public Customer getCustomerById(Long id) {
         return customerDoa.selectCustomerById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer with id [%s] not found ".formatted(id)));
     }
@@ -46,7 +46,7 @@ public class CustomerService {
         customerDoa.deleteCustomerById(id);
     }
 
-    public void updateCustomerById(Integer id, CustomerUpdateRequest update) {
+    public void updateCustomerById(Long id, CustomerUpdateRequest update) {
         Customer customer = getCustomerById(id);
 
         boolean changed = false;
