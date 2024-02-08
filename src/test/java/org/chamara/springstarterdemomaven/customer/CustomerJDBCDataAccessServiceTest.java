@@ -59,6 +59,16 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
     }
 
     @Test
+    void willReturnWhenCustomerNotFound() {
+        // given
+        Long customerId = -1L;
+        // when
+        Optional<Customer> actual = underTest.selectCustomerById(customerId);
+        // then
+        Assertions.assertTrue(actual.isEmpty());
+    }
+
+    @Test
     void itShouldInsertCustomer() {
         // given
         // when
