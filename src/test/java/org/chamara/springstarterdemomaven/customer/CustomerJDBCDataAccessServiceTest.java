@@ -1,8 +1,12 @@
 package org.chamara.springstarterdemomaven.customer;
 
 import org.chamara.springstarterdemomaven.AbstractTestContainer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.UUID;
 
 class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
     private CustomerJDBCDataAccessService underTest;
@@ -17,9 +21,16 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
 
     @Test
     void itShouldSelectAllCustomers() {
+
+
         // given
+        Customer customer = new Customer(FAKER.name().firstName(), FAKER.internet().emailAddress() + "-" + UUID.randomUUID(), FAKER.number().numberBetween(0, 100));
+        underTest.insertCustomer(customer);
         // when
+        List<Customer> customers = underTest.selectAllCustomers();
+
         // then
+        Assertions.assertTrue(customers.size() > 0);
     }
 
     @Test
