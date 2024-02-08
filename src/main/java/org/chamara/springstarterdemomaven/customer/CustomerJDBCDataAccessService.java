@@ -33,7 +33,9 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
                 FROM customer
                 WHERE id = ?
                 """;
-        return jdbcTemplate.query(sql, customerRawMapper, id).stream().findFirst();
+        return jdbcTemplate.query(sql, customerRawMapper, id)
+                .stream()
+                .findFirst();
 
     }
 
