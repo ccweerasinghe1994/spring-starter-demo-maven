@@ -36,13 +36,13 @@ public class CustomerJPADataAccessService implements CustomerDoa {
     }
 
     @Override
-    public void deleteCustomerById(Integer id) {
-        customerRepository.deleteById(id);
+    public void deleteCustomerById(Long id) {
+        customerRepository.deleteById(Math.toIntExact(id));
     }
 
     @Override
-    public boolean existsCustomerById(Integer id) {
-        return customerRepository.existsCustomerById(id);
+    public boolean existsCustomerById(Long id) {
+        return customerRepository.existsCustomerById(Math.toIntExact(id));
     }
 
     @Override

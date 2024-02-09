@@ -39,7 +39,7 @@ public class CustomerService {
         customerDoa.insertCustomer(customer);
     }
 
-    public void deleteCustomerById(Integer id) {
+    public void deleteCustomerById(Long id) {
         if (!customerDoa.existsCustomerById(id)) {
             throw new ResourceNotFoundException("Customer with id [%s] not found ".formatted(id));
         }

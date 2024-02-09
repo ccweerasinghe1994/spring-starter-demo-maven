@@ -39,12 +39,12 @@ public class CustomerDoaService implements CustomerDoa {
     }
 
     @Override
-    public void deleteCustomerById(Integer id) {
+    public void deleteCustomerById(Long id) {
         customers.removeIf(c -> c.getId().equals(id));
     }
 
     @Override
-    public boolean existsCustomerById(Integer id) {
+    public boolean existsCustomerById(Long id) {
         return customers.stream().anyMatch(c -> c.getId().equals(id));
     }
 

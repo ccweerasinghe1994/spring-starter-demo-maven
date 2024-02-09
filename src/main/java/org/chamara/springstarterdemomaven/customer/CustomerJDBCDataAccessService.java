@@ -61,7 +61,7 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
     }
 
     @Override
-    public void deleteCustomerById(Integer id) {
+    public void deleteCustomerById(Long id) {
         var sql = """
                 DELETE FROM customer
                 WHERE id = ?
@@ -71,9 +71,9 @@ public class CustomerJDBCDataAccessService implements CustomerDoa {
     }
 
     @Override
-    public boolean existsCustomerById(Integer id) {
+    public boolean existsCustomerById(Long id) {
         var sql = """
-                SELECT COUNT(*) = 1
+                SELECT COUNT(id)
                 FROM customer
                 WHERE id = ?
                 """;

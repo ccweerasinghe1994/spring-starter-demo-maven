@@ -12,9 +12,9 @@ interface CustomerDoa {
 
     boolean existsCustomerWithEmail(String email);
 
-    void deleteCustomerById(Integer id);
+    void deleteCustomerById(Long id);
 
-    boolean existsCustomerById(Integer id);
+    boolean existsCustomerById(Long id);
 
     void updateCustomer(Customer customer);
 }
