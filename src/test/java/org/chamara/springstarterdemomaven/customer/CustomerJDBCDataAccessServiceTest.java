@@ -71,35 +71,79 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainer {
     @Test
     void itShouldInsertCustomer() {
         // given
+        Customer customer = new Customer(FAKER.name().firstName(), FAKER.internet().emailAddress() + "-" + UUID.randomUUID(), FAKER.number().numberBetween(0, 100));
         // when
+        underTest.insertCustomer(customer);
         // then
+        List<Customer> customers = underTest.selectAllCustomers();
+        Assertions.assertTrue(customers.stream().anyMatch(c -> c.getEmail().equals(customer.getEmail())));
     }
 
     @Test
     void itShouldExistsCustomerWithEmail() {
         // given
+        String emailAddress = FAKER.internet().emailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(FAKER.name().firstName(), emailAddress, FAKER.number().numberBetween(0, 100));
         // when
+        underTest.insertCustomer(customer);
         // then
+        Assertions.assertTrue(underTest.existsCustomerWithEmail(emailAddress));
     }
 
     @Test
     void itShouldDeleteCustomerById() {
         // given
+        String emailAddress = FAKER.internet().emailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(FAKER.name().firstName(), emailAddress, FAKER.number().numberBetween(0, 100));
+        underTest.insertCustomer(customer);
         // when
+        Long customerId = underTest.selectAllCustomers().stream()
+                .filter(c -> c.getEmail().equals(emailAddress))
+                .findFirst()
+                .map(Customer::getId)
+                .orElseThrow();
+        underTest.deleteCustomerById(customerId);
         // then
+        List<Customer> customers = underTest.selectAllCustomers();
+        Assertions.assertTrue(customers.stream().noneMatch(c -> c.getEmail().equals(emailAddress)));
     }
 
     @Test
     void itShouldExistsCustomerById() {
         // given
+        String emailAddress = FAKER.internet().emailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(FAKER.name().firstName(), emailAddress, FAKER.number().numberBetween(0, 100));
+        underTest.insertCustomer(customer);
         // when
+        Long customerId = underTest.selectAllCustomers().stream()
+                .filter(c -> c.getEmail().equals(emailAddress))
+                .findFirst()
+                .map(Customer::getId)
+                .orElseThrow();
         // then
+        Assertions.assertTrue(underTest.existsCustomerById(customerId));
     }
 
     @Test
     void itShouldUpdateCustomer() {
         // given
+        String emailAddress = FAKER.internet().emailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(FAKER.name().firstName(), emailAddress, FAKER.number().numberBetween(0, 100));
+        underTest.insertCustomer(customer);
         // when
+        Long customerId = underTest.selectAllCustomers().stream()
+                .filter(c -> c.getEmail().equals(emailAddress))
+                .findFirst()
+                .map(Customer::getId)
+                .orElseThrow();
+        Customer actual = new Customer(customerId, FAKER.name().firstName(), FAKER.internet().emailAddress() + "-" + UUID.randomUUID(), FAKER.number().numberBetween(0, 100));
+        underTest.updateCustomer(actual);
         // then
+        Optional<Customer> customerById = underTest.selectCustomerById(customerId);
+        Assertions.assertTrue(customerById.isPresent());
+        Assertions.assertEquals(actual.getEmail(), customerById.get().getEmail());
+        Assertions.assertEquals(actual.getName(), customerById.get().getName());
+        Assertions.assertEquals(actual.getAge(), customerById.get().getAge());
+
     }
 }
