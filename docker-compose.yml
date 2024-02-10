@@ -11,13 +11,22 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
-    networks:
+
+  wchamara-api:
+    container_name: wchamara-api
+    image: wchamara/wchamara-customer-api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/customer
+    ports:
+      - "8088:8080"
+
+    depends_on:
       - db
+    restart: unless-stopped
+#    we can use this or env variable
+#    command:
+#      - --spring.datasource.url=jdbc:postgresql://db:5432/customer
 
 volumes:
   db:
 
-# create a network called spring-boot-example-network
-networks:
-  db:
-    driver: bridge
