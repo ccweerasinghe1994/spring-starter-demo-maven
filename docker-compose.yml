@@ -11,6 +11,13 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+    networks:
+      - db
 
 volumes:
   db:
+
+# create a network called spring-boot-example-network
+networks:
+  db:
+    driver: bridge
