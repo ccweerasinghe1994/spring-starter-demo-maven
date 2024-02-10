@@ -9,10 +9,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.chamara</groupId>
-    <artifactId>spring-starter-demo-maven</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>wchamara-customer-api</artifactId>
+    <version>0.0.1-snapshot</version>
     <name>spring-starter-demo-maven</name>
     <description>spring-starter-demo-maven</description>
+    <organization>
+        <name>wchamara</name>
+        <url>http://www.chamara.com</url>
+    </organization>
+
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -142,7 +147,66 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:21</image>
+                        <auth>
+                            <username>${REGISTRY_USERNAME}</username>
+                            <password>${REGISTRY_PASSWORD}</password>
+                        </auth>
+                        <platforms>
+                            <platform>
+                                <architecture>amd64</architecture>
+                                <os>linux</os>
+                            </platform>
+                            <platform>
+                                <architecture>arm64</architecture>
+                                <os>linux</os>
+                            </platform>
+                        </platforms>
+                    </from>
+                    <to>
+                        <image>docker.io/${organization.name}/${project.artifactId}:${project.version}</image>
+                        <auth>
+                            <username>${REGISTRY_USERNAME}</username>
+                            <password>${REGISTRY_PASSWORD}</password>
+                        </auth>
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>dev.env</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
