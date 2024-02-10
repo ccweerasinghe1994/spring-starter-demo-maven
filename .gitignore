@@ -34,3 +34,5 @@ build/
 
 # Env files
 *.env
+
+cicd
