@@ -55,6 +55,8 @@ jobs:
           echo "Dockerrun.aws.json after update"
           cat Dockerrun.aws.json
       - name: Deploy to EB
+        #        got to next step even if the previous step fails
+        continue-on-error: true
         uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
