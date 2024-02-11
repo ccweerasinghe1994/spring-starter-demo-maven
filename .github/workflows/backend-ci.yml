@@ -38,6 +38,6 @@ jobs:
             distribution: 'temurin'
             cache: maven
         - name: Login to DockerHub
-          run: docker login -p ${{ secrets.REGISTRY_PASSWORD }} -u ${{ secrets.REGISTRY_USERNAME }} registry-1.docker.io/v1
+          run: docker login -p ${{ secrets.DOCKER_ACCESS_TOKEN }} -u ${{ secrets.REGISTRY_USERNAME }} registry-1.docker.io/v1
         - name: Build and run unit tests and integration tests and build the docker image
           run: mvn -ntp -B verify
