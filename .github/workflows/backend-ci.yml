@@ -31,7 +31,6 @@ jobs:
 
         steps:
         - name: Post to a Slack channel
-          id: slack
           uses: slackapi/slack-github-action@v1.25.0
           with:
             # Slack channel id, channel name, or user id to post message.
@@ -54,7 +53,6 @@ jobs:
         - name: Build and run unit tests and integration tests and build the docker image
           run: mvn -ntp -B verify
         - name: Post to a Slack channel
-          id: slack
           uses: slackapi/slack-github-action@v1.25.0
           with:
             # Slack channel id, channel name, or user id to post message.
