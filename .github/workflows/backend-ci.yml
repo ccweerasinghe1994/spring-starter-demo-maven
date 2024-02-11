@@ -1,10 +1,11 @@
 name: CI - Backend Build
 on:
-    pull_request: 
-        branches: 
-            - main
-        paths:
-            - 'backend/**'
+  workflow_dispatch:
+  pull_request:
+    branches:
+        - main
+    paths:
+        - 'backend/**'
 
 jobs:
     build:
@@ -29,6 +30,30 @@ jobs:
                 --health-retries 5
 
         steps:
+        - name: Post to a Slack channel
+          id: slack
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            # Slack channel id, channel name, or user id to post message.
+            # See also: https://api.slack.com/methods/chat.postMessage#channels
+            channel-id: 'web-apps'
+            channel-name: 'web-apps'
+            # For posting a rich message using Block Kit
+            payload: |
+              {
+                "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+                "blocks": [
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    }
+                  }
+                ]
+              }
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         - name: Checkout
           uses: actions/checkout@v2
         - name: Set up JDK 17
