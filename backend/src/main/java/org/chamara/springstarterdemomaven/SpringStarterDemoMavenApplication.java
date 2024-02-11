@@ -26,7 +26,7 @@ public class SpringStarterDemoMavenApplication {
             int age;
             String email;
             List<Customer> customers = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 11; i++) {
                 name = faker.name().firstName();
                 age = faker.number().numberBetween(20, 50);
                 email = faker.internet().emailAddress();
