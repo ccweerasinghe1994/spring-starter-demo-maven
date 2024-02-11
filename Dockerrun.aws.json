@@ -1,23 +1,23 @@
 {
-    "AWSEBDockerrunVersion": 2,
-    "containerDefinitions": [
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "wchamara-api",
+      "image": "wchamara/wchamara-customer-api:latest",
+      "essential": true,
+      "memory": 512,
+      "environment": [
         {
-            "name": "wchamara-api",
-            "image": "wchamara/wchamara-customer-api:latest",
-            "essential": true,
-            "memory": 512,
-            "portMappings": [
-                {
-                    "hostPort": 80,
-                    "containerPort": 8080
-                }
-            ]
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://awseb-e-trgh9mwv6m-stack-awsebrdsdatabase-jh9brbk1zzpq.cnsyyi62e81c.us-east-1.rds.amazonaws.com:5432/customer"
         }
-    ],
-    "environment": [
+      ],
+      "portMappings": [
         {
-            "name": "SPRING_DATASOURCE_URL",
-            "value": "prod"
+          "hostPort": 80,
+          "containerPort": 8080
         }
-    ]
+      ]
+    }
+  ]
 }
