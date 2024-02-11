@@ -154,10 +154,6 @@
                 <configuration>
                     <from>
                         <image>eclipse-temurin:21</image>
-                        <auth>
-                            <username>${REGISTRY_USERNAME}</username>
-                            <password>${REGISTRY_PASSWORD}</password>
-                        </auth>
                         <platforms>
                             <platform>
                                 <architecture>amd64</architecture>
@@ -171,10 +167,6 @@
                     </from>
                     <to>
                         <image>docker.io/${organization.name}/${project.artifactId}:${project.version}</image>
-                        <auth>
-                            <username>${REGISTRY_USERNAME}</username>
-                            <password>${REGISTRY_PASSWORD}</password>
-                        </auth>
                         <tags>
                             <tag>latest</tag>
                         </tags>
@@ -186,24 +178,6 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>dev.env</file>
-                            </files>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

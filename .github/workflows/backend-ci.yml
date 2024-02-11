@@ -1,5 +1,4 @@
 name: CI - Backend Build
-
 on:
     pull_request: 
         branches: 
@@ -10,6 +9,7 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        environment: dev
         defaults:
             run:
               working-directory: ./backend
@@ -37,5 +37,7 @@ jobs:
             java-version: '21'
             distribution: 'temurin'
             cache: maven
+        - name: Login to DockerHub
+          run: docker login -p ${{ secrets.REGISTRY_PASSWORD }} -u ${{ secrets.REGISTRY_USERNAME }} registry-1.docker.io/v1
         - name: Build and run unit tests and integration tests and build the docker image
           run: mvn -ntp -B verify
