@@ -37,21 +37,8 @@ jobs:
             # Slack channel id, channel name, or user id to post message.
             # See also: https://api.slack.com/methods/chat.postMessage#channels
             channel-id: 'web-apps'
-            channel-name: 'web-apps'
             # For posting a rich message using Block Kit
-            payload: |
-              {
-                "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-                "blocks": [
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                    }
-                  }
-                ]
-              }
+            slack-message: "Build process has started for customer-api"
           env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         - name: Checkout
@@ -66,3 +53,14 @@ jobs:
           run: docker login -p ${{ secrets.DOCKER_ACCESS_TOKEN }} -u ${{ secrets.REGISTRY_USERNAME }} registry-1.docker.io/v1
         - name: Build and run unit tests and integration tests and build the docker image
           run: mvn -ntp -B verify
+        - name: Post to a Slack channel
+          id: slack
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            # Slack channel id, channel name, or user id to post message.
+            # See also: https://api.slack.com/methods/chat.postMessage#channels
+            channel-id: 'web-apps'
+            # For posting a rich message using Block Kit
+            slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
