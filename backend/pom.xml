@@ -13,13 +13,12 @@
     <version>0.0.1-snapshot</version>
     <name>spring-starter-demo-maven</name>
     <description>spring-starter-demo-maven</description>
-    <organization>
-        <name>wchamara</name>
-        <url>http://www.chamara.com</url>
-    </organization>
 
     <properties>
         <java.version>21</java.version>
+        <docker.username>wchamara</docker.username>
+        <docker.image.name>wchamara-customer-api</docker.image.name>
+        <docker.image.tag/>
     </properties>
     <dependencies>
         <dependency>
@@ -166,20 +165,12 @@
                         </platforms>
                     </from>
                     <to>
-                        <image>docker.io/${organization.name}/${project.artifactId}:${project.version}</image>
+                        <image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
                         <tags>
                             <tag>latest</tag>
                         </tags>
                     </to>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
