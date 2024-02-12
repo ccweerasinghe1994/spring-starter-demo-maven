@@ -33,7 +33,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: 'web-apps'
-          slack-message: "Deployment has started :progress_bar: :fingers_crossed:"
+          slack-message: "Deployment has started :progress_bar: :crossed-fingers:"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: Checkout
