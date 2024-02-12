@@ -29,6 +29,13 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: "Deployment has started :progress_bar: :fingers_crossed:"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up JDK 21
@@ -42,11 +49,25 @@ jobs:
         with:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: "Building With Maven :apache_maven:"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: Set Build number
         id: build-number
         run: echo "BUILD_NUMBER=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
       - name: Build and run unit tests and integration tests and build the docker image
         run: mvn -ntp -B verify -Ddocker.image.tag=${{ steps.build-number.outputs.BUILD_NUMBER }} jib:build
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: ":docker: image tag ${{ steps.build-number.outputs.BUILD_NUMBER }} publish the image to docker hub https://hub.docker.com/repository/docker/wchamara/wchamara-customer-api/general"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: update Dockerrun.aws.json with the new build number
         run: |
           echo "Dockerrun.aws.json before update"
@@ -54,8 +75,14 @@ jobs:
           sed -i -E 's_(wchamara/wchamara-customer-api:)([^"]*)_\1'${{ steps.build-number.outputs.BUILD_NUMBER }}'_' Dockerrun.aws.json
           echo "Dockerrun.aws.json after update"
           cat Dockerrun.aws.json
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: ":aws: Deploying to Elastic Beanstalk"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: Deploy to EB
-        #        got to next step even if the previous step fails
         continue-on-error: true
         uses: einaregilsson/beanstalk-deploy@v21
         with:
@@ -67,6 +94,13 @@ jobs:
           version_description: ${{github.SHA}}
           region: ${{ secrets.EB_REGION }}
           deployment_package: backend/Dockerrun.aws.json
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: ":githubloading: Committing to :github: repo https://github.com/ccweerasinghe1994/spring-starter-demo-maven"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       - name: Commit and push Dockerrun.aws.json
         run: |
           git config user.name "github-actions"
@@ -74,3 +108,18 @@ jobs:
           git add .
           git commit -m "Update Dockerrun.aws.json with new tag: ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: "Deployment and commit completed :github-check-mark: :fireworks-animate: ${{ secrets.EB_URL }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Post to a Slack channel
+        if: always()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: 'web-apps'
+          slack-message: "Job Status ${{ job.status }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
