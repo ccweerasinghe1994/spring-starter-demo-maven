@@ -33,10 +33,7 @@ jobs:
         - name: Post to a Slack channel
           uses: slackapi/slack-github-action@v1.25.0
           with:
-            # Slack channel id, channel name, or user id to post message.
-            # See also: https://api.slack.com/methods/chat.postMessage#channels
             channel-id: 'web-apps'
-            # For posting a rich message using Block Kit
             slack-message: "Build process has started for customer-api"
           env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -55,10 +52,7 @@ jobs:
         - name: Post to a Slack channel
           uses: slackapi/slack-github-action@v1.25.0
           with:
-            # Slack channel id, channel name, or user id to post message.
-            # See also: https://api.slack.com/methods/chat.postMessage#channels
             channel-id: 'web-apps'
-            # For posting a rich message using Block Kit
             slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
           env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
