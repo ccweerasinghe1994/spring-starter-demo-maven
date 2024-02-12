@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "wchamara-api",
-      "image": "wchamara/wchamara-customer-api:latest",
+      "image": "wchamara/wchamara-customer-api:20240212032147",
       "essential": true,
       "memory": 512,
       "environment": [
